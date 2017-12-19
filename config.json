@@ -1,0 +1,5 @@
+module.exports = {
+
+    // OAuth 1.0
+  API_KEY: process.env.API_KEY || 'ya29.Gl0nBQ6YnS8ePkys-bNtgeOhcV566GrAP3Tqi3K57XrontohUcjNXYYK2VyMWD5C3A1KrEmTpUvDvdIGnRiI7dGoImlpQiiUcn6rN18kccJd-GmjgWf_Kbb4GyMkddo'
+};
