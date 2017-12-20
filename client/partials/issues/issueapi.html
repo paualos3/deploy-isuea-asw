@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-12">
+        <div id="customer-table">
+            <table class="table table-hover">
+                <thead>
+                    <th>Title</th>
+                    <th>Created by</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Asigned to</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th>Votes</th>
+                </thead>
+                <tr ng-repeat="(id, issue) in issues">
+                    <td>{{issue.issue}}</td>
+                    <td>{{issue.user}}</td>
+                    <td>{{issue.category}}</td>
+                    <td>{{issue.priority}}</td>
+                    <td>{{issue.status}}</td>
+                    <td>{{issue.assignee}}</td>
+                    <td>{{issue.created_at}}</td>
+                    <td>{{issue.updated_at}}</td>
+                    <td>{{issue.Votes}}</td>
+                    <!--<td><i class="fa fa-trash" ng-click="delete((currentPage - 1) * pageSize + $index)"></i>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <pagination total-items="issues.length" ng-model="currentPage" items-per-page="pageSize"></pagination>
+    </div>
+</div>
