@@ -18,10 +18,12 @@ app.use(express.static(path.resolve(__dirname, 'client')));
 
 //set our first route
 app.get('/', function(req, res){
-    res.render('index.ejs')
+    res.render('index.ejs');
 })
 
-app.get('/home', function(req,res){ res.render('index'); }); 
+app.get('/home', function(req,res){ res.render('index.ejs'); }); 
+app.get('/about', function(req,res){ res.render('index.ejs'); }); 
+app.get('/contact', function(req,res){ res.render('index.ejs'); }); 
 
 //make our app listen for incoming requests on the port assigned above
 app.listen(port, function(){
