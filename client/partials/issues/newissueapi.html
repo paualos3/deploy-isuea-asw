@@ -23,32 +23,33 @@
             </div>
             <br>
             <div class="row">
-                <button type="submit" class="btn btn-success center-block" onclick="check()">Create issue</button>
+                <button type="submit" class="btn btn-success center-block" ng-click="postNewIssue()">Create issue</button>
+                <script>
+                    function check() {
+                        var title = document.getElementById("title").value;
+                        var description = document.getElementById("description").value;
+                        var priority = document.getElementById("priority").value;
+                        var assignee = document.getElementById("assignee").value;
+                        var category = document.getElementById("category").value;
+                        var err = "";
+                        if (title == "") err += "The issue must have a title.\n";
+                        if (!['Trivial', 'Minor','Major','Critical','Blocker'].includes(priority)) 
+                            err += "The priority of the issue must be Trivial, Minor, Major, Critical or Blocker.\n";
+                        if (!['Task', 'Bug','Proposal','Enhancement'].includes(category))
+                            err += "The category of the issue must be Task, Bug, Proposal or Enhancement.\n";
+                        if (err != "") {
+                            alert(err);
+                        }
+                        else {
+                            angular.element(document.getElementById('submit')).scope().postNewIssue(title,description,priority,category,assignee);
+                            var path = "/";
+                            window.location.href = path;
+                        }
+                    }
+                </script>
             </div>
             <br>
         </form>
     </div>
 </div>
-    <script>
-        function check() {
-            var title = document.getElementById("title").value;
-            var description = document.getElementById("description").value;
-            var priority = document.getElementById("priority").value;
-            var assignee = document.getElementById("assignee").value;
-            var category = document.getElementById("category").value;
-            var err = "";
-            if (title == "") err += "The issue must have a title.\n";
-            if (!['Trivial', 'Minor','Major','Critical','Blocker'].includes(priority)) 
-                err += "The priority of the issue must be Trivial, Minor, Major, Critical or Blocker.\n";
-            if (!['Task', 'Bug','Proposal','Enhancement'].includes(category))
-                err += "The category of the issue must be Task, Bug, Proposal or Enhancement.\n";
-            if (err != "") {
-                alert(err);
-            }
-            else {
-                angular.element(document.getElementById('submit')).scope().postNewIssue(title,description,priority,category,assignee);
-                var path = "/";
-                window.location.href = path;
-            }
-        }
-    </script>
+    

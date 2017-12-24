@@ -1,3 +1,15 @@
+<div=class nav-header>
+  <h1>Issues</h1> 
+</div>
+
+<div>FILTER BY : 
+    <a ng-Click="filterIssues()" class="btn btn-primary">All</a> 
+    <a ng-Click="myIssues()" class="btn btn-primary btn-info">Mine</a>
+    <a ng-Click="watchingIssues()" class="btn btn-primary btn-warning">Watching</a>
+    <a ng-Click="filterIssues('Close')" class="btn btn-primary btn-danger">Closed</a>
+  </div>
+<br>
+
 <div class="row">
     <div class="col-md-12">
         <div id="customer-table">
@@ -14,17 +26,15 @@
                     <th>Votes</th>
                 </thead>
                 <tr ng-repeat="(id, issue) in issues">
-                    <td>{{issue.issue}}</td>
-                    <td>{{issue.user}}</td>
-                    <td>{{issue.category}}</td>
-                    <td>{{issue.priority}}</td>
-                    <td>{{issue.status}}</td>
-                    <td>{{issue.assignee}}</td>
-                    <td>{{issue.created_at}}</td>
-                    <td>{{issue.updated_at}}</td>
+                    <td><a href="/issues/{{issue.id}}">{{issue.issue}}</a></td>
+                    <td><a href="" ng-Click="filterIssuesByOwner(issue.user)">{{issue.user}}</a></td>
+                    <td><a href="" ng-Click="filterIssues(issue.category)">{{issue.category}}</a></td>
+                    <td><a href="" ng-Click="filterIssues(issue.priority)">{{issue.priority}}</a></td>
+                    <td><a href="" ng-Click="filterIssues(issue.status)">{{issue.status}}</a></td>
+                    <td><a href="" ng-Click="filterIssuesByAssignee(issue.assignee)">{{issue.assignee}}</a></td>
+                    <td><span am-time-ago="issue.created_at"></span></td>
+                    <td><span am-time-ago="issue.updated_at"></span></td>
                     <td>{{issue.Votes}}</td>
-                    <!--<td><i class="fa fa-trash" ng-click="delete((currentPage - 1) * pageSize + $index)"></i>-->
-                    </td>
                 </tr>
             </table>
         </div>

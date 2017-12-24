@@ -1,0 +1,41 @@
+<div class="row">
+      <div class="col-md-12">
+            <div class="col-sm-8 well">
+                  <p ><strong>Issue: </strong>{{issue.issue}}</p>
+                  <p><strong>Created: </strong><span am-time-ago="issue.created_at"></span></p>
+                  <p><strong>Last Update: </strong><span am-time-ago="issue.updated_at"></span></p>
+                  <p><strong>Description: </strong>{{issue.description}}</p>
+                  <br>
+                <!--<p>
+                  <strong>Attachment:</strong>
+                    <% if @issue.attachment? %>
+                      <a target="_blank" href="<%= @issue.attachment %>"> Ver archivo </a>
+                    <% else %>
+                      This Issue doesn't have an attachment
+                    <% end %>
+                </p>-->
+                
+            </div>
+            <div class="col-sm-4" >
+                  <div class="well"> 
+                        <p><strong>Created by : </strong>{{issue.user}}</p>
+                        <p><strong>Assigned to : </strong>{{issue.assignee}}</p>
+                        <p><strong>Category:</strong>{{issue.category}}</p>
+                        <p><strong>Priority: </strong>{{issue.priority}}</p>
+                        <p><strong>Status: </strong>{{issue.status}}</p>
+                        <p><strong>Votes:</strong>{{issue.Votes}}</p>
+                  </div>
+            </div>
+    </div>
+</div>
+<div class="row">
+      <div class="col-md-12">
+            <table class="table table-hover">
+             <tr ng-repeat="(id, comment) in comments">
+                  <td>{{id+1}}) {{comment.body}}</td>
+                  <td><a href="/users/{{comment.user_id}}"> {{comment.userName}} </td> 
+                  <td>{{comment.hoursAgo}}</td>
+              </tr>
+            </table>
+      </div>
+</div>
