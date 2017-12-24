@@ -11,7 +11,7 @@ var myApp = angular.module('myApp', [
         $routeProvider.when('/issues/:id', {templateUrl: 'partials/issues/showIssue.html', controller: 'issuesController'});
         
         //if no valid routes are found, redirect to /home
-        $routeProvider.otherwise({redirectTo: '/home'});
+        $routeProvider.otherwise({redirectTo: '/issues'});
         //new comment
         $locationProvider.html5Mode({enabled: true, requireBase: false});
     }])
