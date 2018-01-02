@@ -32,10 +32,32 @@
       <div class="col-md-12">
             <table class="table table-hover">
              <tr ng-repeat="(id, comment) in comments">
+               
                   <td>{{id+1}}) {{comment.body}}</td>
                   <td><a href="/users/{{comment.user_id}}"> {{comment.userName}} </td> 
                   <td>{{comment.hoursAgo}}</td>
+                  <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button>
+                  <button class="btn btn-primary" id="upd" ng-click="updateClicked(comment)">Update</button></td>  <!--ng-click="showUpdate()"-->
+                  <td> {{comment.id}} </td>
+                  <td> {{commentU.id}} </td>
+
+                  <td id="someDiv" ng-show="comment.id==commentU.id">
+                    
+                        <ng-include src="'/partials/updateComment.html'"></ng-include>
+                  </td>
+                  <!--script>
+                   document.getElementById("upd").onclick = function () { myFunction() };
+                     function myFunction() {
+                        $("#someDiv").load('@Url.Action("doctorsview","Home")');
+                     }
+                  </script-->
+                  
               </tr>
             </table>
       </div>
 </div>
+
+  
+  <h2> Add a Comment: </h2>
+    <!--<div ng-include="/partials/newComment.html"></div>-->
+    <ng-include src="'/partials/newComment.html'"></ng-include>

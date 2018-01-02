@@ -10,7 +10,9 @@ var myApp = angular.module('myApp', [
         $routeProvider.when('/issues/new', {templateUrl: 'partials/issues/newissueapi.html', controller: 'issuesController'});
         $routeProvider.when('/issues/:id', {templateUrl: 'partials/issues/showIssue.html', controller: 'issuesController'});
         
-        //if no valid routes are found, redirect to /home
+        
+        
+        //if no valid routes are found, redirect to /issues
         $routeProvider.otherwise({redirectTo: '/issues'});
         //new comment
         $locationProvider.html5Mode({enabled: true, requireBase: false});

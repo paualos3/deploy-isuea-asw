@@ -1,0 +1,22 @@
+
+<div class="row">
+ 
+    
+    <input type="text" ng-show="false" ng-model="formComments.user_id"  ng-value="user.user_id"/>
+    
+     <div class="form-group">
+        <label for="auth">Author</label>
+        <label class="form-control" id="auth">Autor todavia por definir </label>
+  </div>
+    
+    
+</div>
+
+<div class="row">
+  <div class="form-group">
+                <label for="titleC">Comment</label>
+                <input type="textarea" class="form-control" id="titleC" ng-model="formComments.titleC">
+  </div>
+</div>
+    <button type="submit" class="btn btn-success center-block" ng-click="postComment()">Create comment</button>
+
