@@ -177,7 +177,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
         var err = ""
         var issue = {
             'id': url[(url.length)-1],
-            'title': $scope.issue.title,
+            'issue': $scope.issue.issue,
             'description': $scope.issue.description,
             'category': $scope.issue.category,
             'assignee': $scope.issue.assignee,
@@ -186,7 +186,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             'attachment' : $scope.issue.attachment,
         };
         console.log(issue); 
-        if (issue.title == "") err += "The issue must have a title.\n";
+        if (issue.issue == "") err += "The issue must have a title.\n";
         if (!['Trivial', 'Minor','Major','Critical','Blocker'].includes(issue.priority)) 
             err += "The priority of the issue must be Trivial, Minor, Major, Critical or Blocker.\n";
         if (!['Task', 'Bug','Proposal','Enhancement'].includes(issue.category))
@@ -207,7 +207,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
                     'Authorization': 'Token token='+token
                 },
                 data: {
-                    'title': issue.title,
+                    'title': issue.issue,
                     'description': issue.description,
                     'category': issue.category,
                     'assignee': issue.assignee,
@@ -221,7 +221,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
                 console.log(response.data);
                 alert("Issue edited");
                 console.log(response);
-                $location.path( '/issues/'+url[(url.length)-2]);
+                //$location.path( '/issues/'+url[(url.length)-2]);
             }, function(response){
                 // failure callback
                 console.log(response.data);

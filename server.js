@@ -21,9 +21,8 @@ app.get('/', function(req, res){
     res.render('index.ejs');
 })
 
-app.get('/home', function(req,res){ res.render('index.ejs'); }); 
-app.get('/about', function(req,res){ res.render('index.ejs'); }); 
-app.get('/contact', function(req,res){ res.render('index.ejs'); }); 
+
+app.get('/about', function(req,res){ res.render('index.ejs'); });
 app.get('/issues', function(req,res){ res.render('index.ejs'); }); 
 app.get('/issues/new', function(req,res){ res.render('index.ejs'); }); 
 app.get('/issues/:id', function(req,res){ res.render('index.ejs'); }); 
