@@ -221,7 +221,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
                 console.log(response.data);
                 alert("Issue edited");
                 console.log(response);
-                //$location.path( '/issues/'+url[(url.length)-2]);
+                $location.path( '/issues/'+url[(url.length)-2]);
             }, function(response){
                 // failure callback
                 console.log(response.data);
