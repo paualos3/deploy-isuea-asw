@@ -5,6 +5,10 @@
                   <p><strong>Created: </strong><span am-time-ago="issue.created_at"></span></p>
                   <p><strong>Last Update: </strong><span am-time-ago="issue.updated_at"></span></p>
                   <p><strong>Description: </strong>{{issue.description}}</p>
+                  <p>
+                      <button class="btn btn-primary btn-warning" ng-Click="navigateToEditIssue()"><span class="glyphicon glyphicon-pencil"></span> Edit</button> 
+                      <button class="btn btn-primary btn-danger" ng-Click="deleteIssue()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                  </p>
                   <br>
                 <!--<p>
                   <strong>Attachment:</strong>
@@ -24,6 +28,22 @@
                         <p><strong>Priority: </strong>{{issue.priority}}</p>
                         <p><strong>Status: </strong>{{issue.status}}</p>
                         <p><strong>Votes:</strong>{{issue.Votes}}</p>
+                        <p>
+                          <button type="button" class="btn btn-success btn-sm" ng-Click="likeIssue()">
+                            <span class="glyphicon glyphicon-thumbs-up"></span> Like({{issue.UpVotes}})
+                          </button>
+                          <button type="button" class="btn btn-danger btn-sm" ng-Click="unlikeIssue()">
+                            <span class="glyphicon glyphicon-thumbs-down"></span> Dislike({{issue.DownVotes}})
+                          </button>
+                        </p>
+                        <div ng-if="userWatches">
+                            <!-- code to render a large video block-->
+                            <p><strong>Watching issue -> </strong><button class="btn btn-primary btn-warning" ng-Click="unwatchIssue()"><span class="glyphicon glyphicon-eye-close"></span> Unwatch</button></p>
+                        </div>
+                        <div ng-if="!userWatches">
+                            <!-- code to render the regular video block -->
+                            <p><strong>Not watching issue -> </strong><button ng-Click="watchIssue()" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Watch</button></p>
+                        </div>
                   </div>
             </div>
     </div>
@@ -36,22 +56,11 @@
                   <td>{{id+1}}) {{comment.body}}</td>
                   <td><a href="/users/{{comment.user_id}}"> {{comment.userName}} </td> 
                   <td>{{comment.hoursAgo}}</td>
-                  <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button>
-                  <button class="btn btn-primary" id="upd" ng-click="updateClicked(comment)">Update</button></td>  <!--ng-click="showUpdate()"-->
-                  <td> {{comment.id}} </td>
-                  <td> {{commentU.id}} </td>
-
+                  <td ng-if="comment.userName == user.username "><button class="btn btn-danger" ng-click="deleteComment(comment)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                  <button class="btn btn-primary" id="upd" ng-click="updateClicked(comment)"><span class="glyphicon glyphicon-upload"></<span> Update</button></td>  <!--ng-click="showUpdate()"-->
                   <td id="someDiv" ng-show="comment.id==commentU.id">
-                    
-                        <ng-include src="'/partials/updateComment.html'"></ng-include>
+                  <ng-include src="'/partials/updateComment.html'"></ng-include>
                   </td>
-                  <!--script>
-                   document.getElementById("upd").onclick = function () { myFunction() };
-                     function myFunction() {
-                        $("#someDiv").load('@Url.Action("doctorsview","Home")');
-                     }
-                  </script-->
-                  
               </tr>
             </table>
       </div>

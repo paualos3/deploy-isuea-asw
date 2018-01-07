@@ -1,4 +1,4 @@
-myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', '$location', function($scope, Api, $http, $routeParams, $location){
+myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', '$location', '$window', function($scope, Api, $http, $routeParams, $location, $window){
     
     $scope.form = {};
     $scope.formComments = {};
@@ -6,22 +6,28 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
     $scope.issues = [];
     $scope.comments = [];
     $scope.issue;
+    $scope.userWatches;
     
     $scope.commentU = {};
     
     $scope.user={}; // TO DO , asignar el usuario al hacer login
-    $scope.user.username="usuario random";
+    $scope.user.username="Pau Alos";
     $scope.user.user_id="1";
+
     // ^ valores random definidos para pruebas
     
-    var token = 'ya29.Gl01BQboAPcqUFJZhO3Zc8UgqU_dgjcIcsRz7HdiH7SPbkxUv9nEfS_l8zcvpg8sy5wh47oz3Wk7b9t5hgaeYmkOY2TXv1Bb8hzNwivAqq8Er8io71WE3S5xv-gHemE';
+    //Arrays para selectores
+    $scope.categories = ['Task', 'Bug','Proposal','Enhancement'];
+    
+    var token = 'ya29.Gl07BRrROi5HqAf5B3_apMgQQDDfy0c7tKQoLcH9epeeVvYbOa_Rj4TtooSjIKZx0yYFm0rus8HWOfGB-_5Sq9i7D-mv4tICgTOmWvArvasVgxJwoWAG4OJQAApl0xg';
+    var user = 'Pau Alos';
     
     console.log("issuesCOntroller");
     var url =  $location.absUrl().split("/");
     // GET ISSUES
     
     if (url[(url.length)-1]=="issues"){
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues', { 
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues', { 
           headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Token token='+token
@@ -35,23 +41,49 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             console.log(response);
         });
     }
-    else {
+    else if (url[(url.length)-1]=="edit"){
      //   $scope.getIssue(url);
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1], { 
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-2], { 
           headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Token token=ya29.Gl0pBfLX6i_SyRGIdjZMvNJjg7DFofH6cMsyeDb76wzOubNm3XHywakNJJjGB3QYwG8UMNQkzb4ADEER6Pr4WQVLc6qo5veIPpVk3Sii-EyPPZYBurmF8UqBd6yGLvg'
+                'Authorization': 'Token token='+token
              }
         })
         .then(function(response) {
             console.log("Get ISSUE "+url[(url.length)-1]);
             $scope.issue = response.data;
+            $scope.userWatches = false;
+            for (var d = 0, len = response.data.watchers.length; d < len; d += 1) {
+                if (response.data.watchers[d].name === user) {
+                    $scope.userWatches = true;
+                }
+            }
             console.log(response);
         });
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1]+"/comments", { 
+    }
+    else {
+     //   $scope.getIssue(url);
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1], { 
           headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Token token=ya29.Gl0pBfLX6i_SyRGIdjZMvNJjg7DFofH6cMsyeDb76wzOubNm3XHywakNJJjGB3QYwG8UMNQkzb4ADEER6Pr4WQVLc6qo5veIPpVk3Sii-EyPPZYBurmF8UqBd6yGLvg'
+                'Authorization': 'Token token='+token
+             }
+        })
+        .then(function(response) {
+            console.log("Get ISSUE "+url[(url.length)-1]);
+            $scope.issue = response.data;
+            $scope.userWatches = false;
+            for (var d = 0, len = response.data.watchers.length; d < len; d += 1) {
+                if (response.data.watchers[d].name === user) {
+                    $scope.userWatches = true;
+                }
+            }
+            console.log(response);
+        });
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+"/comments", { 
+          headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Token token='+token
              }
         })
         .then(function(response) {
@@ -62,7 +94,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
     }
     
     $scope.getIssue = function(url){
-         $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1], { 
+         $http.get('https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1], { 
           headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Token token='+token
@@ -73,7 +105,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             $scope.issue = response.data;
             console.log(response);
         });
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1]+"/comments", { 
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+"/comments", { 
           headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Token token='+token
@@ -97,6 +129,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             'category': $scope.form.category,
             'assignee': $scope.form.assignee,
             'priority': $scope.form.priority,
+            'attachment' : $scope.form.attachment,
         };
         if (issue.title == "") err += "The issue must have a title.\n";
         if (!['Trivial', 'Minor','Major','Critical','Blocker'].includes(issue.priority)) 
@@ -110,7 +143,7 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             console.log(issue);
             var req = {
                 method: 'POST',
-                url: 'https://isuea-traker-asw-paualos3.c9users.io/issues',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues',
                 headers: {
                     'content-type': 'application/json',
                     'Accept': 'application/json',
@@ -130,11 +163,102 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
                 console.log(response.data);
                 alert("Issue posted");
                 console.log(response);
+                $location.path( '/issues/'+response.data.id );
             }, function(response){
                 // failure callback
                 console.log(response.data);
             });
         }
+    };
+    
+    
+    $scope.editIssue = function () {
+        
+        var err = ""
+        var issue = {
+            'id': url[(url.length)-1],
+            'title': $scope.issue.title,
+            'description': $scope.issue.description,
+            'category': $scope.issue.category,
+            'assignee': $scope.issue.assignee,
+            'priority': $scope.issue.priority,
+            'status': $scope.issue.status,
+            'attachment' : $scope.issue.attachment,
+        };
+        console.log(issue); 
+        if (issue.title == "") err += "The issue must have a title.\n";
+        if (!['Trivial', 'Minor','Major','Critical','Blocker'].includes(issue.priority)) 
+            err += "The priority of the issue must be Trivial, Minor, Major, Critical or Blocker.\n";
+        if (!['Task', 'Bug','Proposal','Enhancement'].includes(issue.category))
+            err += "The category of the issue must be Task, Bug, Proposal or Enhancement.\n";
+        if (!['Opened', 'Closed', 'On holded', 'Wontfixed', 'Resolved', 'Invalid', 'Duplicated'].includes(issue.status))
+            err += "The status of the issue must be Opened, Closed, On holded, Wontfix, Resolved, Invalid or Duplicated.\n";
+        if (err != "") {
+            alert(err);
+        }
+         else {
+            console.log(issue);
+            var req = {
+                method: 'PUT',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-2],
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    'title': issue.title,
+                    'description': issue.description,
+                    'category': issue.category,
+                    'assignee': issue.assignee,
+                    'priority': issue.priority,
+                    'status': issue.status,
+                }
+            };
+            console.log(req);
+            $http(req).then(function(response) {
+                console.log("Edit ISSUES");
+                console.log(response.data);
+                alert("Issue edited");
+                console.log(response);
+                $location.path( '/issues/'+url[(url.length)-2]);
+            }, function(response){
+                // failure callback
+                console.log(response.data);
+            });
+        }
+        
+    };
+    
+    $scope.deleteIssue = function (issue) {
+        
+        var req = {
+                //  /issues/{issue_id}
+                method: 'DELETE',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1],
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    
+                }
+        };
+        
+        console.log(req);
+            $http(req).then(function(response) {
+                console.log("Delete Issue");
+                console.log(response.data);
+                alert("Issue deleted successfully");
+                console.log(response);
+            }, function(response){
+                // failure callback
+                alert("Issue failed to be deleted");
+                console.log(response.data);
+            });
+        //AÑADIDO PARA EL REFRESH
+        $location.path( '/issues/'); 
     };
     
     $scope.allIssues = function() { 
@@ -233,10 +357,10 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
     
     $scope.myIssues = function() { 
         console.log("my issues");
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/mine', { 
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/mine', { 
           headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Token token=ya29.Gl0pBfLX6i_SyRGIdjZMvNJjg7DFofH6cMsyeDb76wzOubNm3XHywakNJJjGB3QYwG8UMNQkzb4ADEER6Pr4WQVLc6qo5veIPpVk3Sii-EyPPZYBurmF8UqBd6yGLvg'
+                'Authorization': 'Token token='+token
              }
         })
         .then(function(response) {
@@ -248,10 +372,10 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
     
     $scope.watchingIssues = function() { 
         console.log("Watching issues");
-        $http.get('https://isuea-traker-asw-paualos3.c9users.io/issues/watching', { 
+        $http.get('https://isuea-traker-asw.herokuapp.com/issues/watching', { 
           headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Token token=ya29.Gl0pBfLX6i_SyRGIdjZMvNJjg7DFofH6cMsyeDb76wzOubNm3XHywakNJJjGB3QYwG8UMNQkzb4ADEER6Pr4WQVLc6qo5veIPpVk3Sii-EyPPZYBurmF8UqBd6yGLvg'
+                'Authorization': 'Token token='+token
              }
         })
         .then(function(response) {
@@ -260,16 +384,135 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
             console.log(response);
         });
     };
+
+    $scope.likeIssue = function() {
+        var req = {
+                //  /issues/{issue_id}/watch
+                method: 'PUT',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/like',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    
+                }
+        };
+        
+        console.log(req);
+            $http(req).then(function(response) {
+                console.log("Like Issue");
+                console.log(response.data);
+                //alert("Issue watched");
+                console.log(response);
+            }, function(response){
+                // failure callback
+                //alert("Issue failed to be watched");
+                console.log(response.data);
+            });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+    };
+    
+    $scope.unlikeIssue = function() {
+        var req = {
+                //  /issues/{issue_id}/unwatch
+                method: 'PUT',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/unlike',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    
+                }
+        };
+        
+        console.log(req);
+            $http(req).then(function(response) {
+                console.log("Unlike issue");
+                console.log(response.data);
+                alert("Issue unliked");
+                console.log(response);
+            }, function(response){
+                // failure callback
+                console.log(response.data);
+            });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+    };
+    
+    $scope.watchIssue = function() {
+        var req = {
+                //  /issues/{issue_id}/watch
+                method: 'PUT',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/watch',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    
+                }
+        };
+        
+        console.log(req);
+            $http(req).then(function(response) {
+                console.log("Watch Issue");
+                console.log(response.data);
+                //alert("Issue watched");
+                console.log(response);
+            }, function(response){
+                // failure callback
+                //alert("Issue failed to be watched");
+                console.log(response.data);
+            });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+        
+    };
+    
+    $scope.unwatchIssue = function() {
+        var req = {
+                //  /issues/{issue_id}/unwatch
+                method: 'PUT',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/unwatch',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Token token='+token
+                },
+                data: {
+                    
+                }
+        };
+        
+        console.log(req);
+            $http(req).then(function(response) {
+                console.log("Unwatch Issue");
+                console.log(response.data);
+                alert("Issue unwatched");
+                console.log(response);
+            }, function(response){
+                // failure callback
+                console.log(response.data);
+            });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+    };
+    
     
     $scope.postComment = function(){
       //  var teoricaID = url[(url.length)-1
         var com = {
-              'body': $scope.formComments.titleC,
-              'user_id': $scope.user.user_id
+              'body': $scope.formComments.titleC
         }
         var req = {
                 method: 'POST',
-                url: 'https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1]+'/comments',
+                url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/comments',
                 headers: {
                     'content-type': 'application/json',
                     'Accept': 'application/json',
@@ -279,106 +522,107 @@ myApp.controller('issuesController', ['$scope', 'Api', '$http', '$routeParams', 
                     'comment': com
                 }
         };
-            console.log(req);
-            $http(req).then(function(response) {
-                console.log("Post Comment");
-                console.log(response.data);
-                alert("Comment posted");
-                $scope.formComments={};
-                console.log(response);
-            }, function(response){
-                // failure callback
-                alert("Comment failed to be posted");
-                console.log(response.data);
-            });
+        console.log(req);
+        $http(req).then(function(response) {
+            console.log("Post Comment");
+            console.log(response.data);
+            $window.location.reload();
+            alert("Comment posted");
+            $scope.formComments={};
+            console.log(response);
+        }, function(response){
+            // failure callback
+            alert("Comment failed to be posted");
+            console.log(response.data);
+        });
         
     };
-        $scope.deleteComment = function(comment){
-            var idComment = comment.id
-          //  console.log(comment.id);
-            var req = {
-                
-                //   /issues/{issue_id}/comments/{comment_id}:
-                method: 'DELETE',
-                url: 'https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1]+'/comments/'+idComment,
-                headers: {
-                    'content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Token token='+token
-                },
-                data: {
-                 //   'comment': com
-                }
-           };
-            console.log(req);
-            $http(req).then(function(response) {
-                console.log("Delete Comment");
-                console.log(response.data);
-                alert("Comment deleted");
-                console.log(response);
-            }, function(response){
-                // failure callback
-                alert("Comment failed to be deleted");
-                console.log(response.data);
-            });
+    
+    $scope.deleteComment = function(comment){
+        var idComment = comment.id
+      //  console.log(comment.id);
+        var req = {
             
-            
-        };
-        $scope.updateClicked = function(comment){
-            var idComment = comment.id
-            $scope.commentU = comment;
-        };
-        
-         $scope.updateComment = function(){
-            
-            var comment = $scope.commentU
-            var idComment = comment.id
-            console.log(comment.id);
-            var com = {
-              'body': $scope.formComments.titleC,
-              'user_id': $scope.user.user_id
+            //   /issues/{issue_id}/comments/{comment_id}:
+            method: 'DELETE',
+            url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/comments/'+idComment,
+            headers: {
+                'content-type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Token token='+token
+            },
+            data: {
+             //   'comment': com
             }
-            var req = {
-                
-                //   /issues/{issue_id}/comments/{comment_id}:
-                method: 'PUT',
-                url: 'https://isuea-traker-asw-paualos3.c9users.io/issues/'+url[(url.length)-1]+'/comments/'+idComment,
-                headers: {
-                    'content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Token token='+token
-                },
-                data: {
-                    'body': $scope.formComments.titleC
-                }
-           };
-            console.log(req);
-            $http(req).then(function(response) {
-                console.log("Update Comment");
-                console.log(response.data);/*
-                $scope.$apply(function(){
-                for (var i in $scope.comments){
-                    if (i.id==idComment){
-                        i.body = response.data.body;
-                    }
-                }
-                    
-                })*/
-                
-                
-                
-                $scope.commentU = {};
-             //   alert("Comment deleted");
-                console.log(response);
-            }, function(response){
-                // failure callback
-            //    alert("Comment failed to be deleted");
-                console.log(response.data);
-            });
+       };
+        console.log(req);
+        $http(req).then(function(response) {
+            console.log("Delete Comment");
+            console.log(response.data);
+            console.log(response);
+        }, function(response){
+            // failure callback
+            console.log(response.data);
+        });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+    };
+    
+    $scope.updateClicked = function(comment){
+        var idComment = comment.id
+        $scope.commentU = comment;
+    };
+        
+    $scope.updateComment = function(){
+        
+        var comment = $scope.commentU
+        var idComment = comment.id
+    
+        console.log(comment.id);
+        var com = {
+          'body': $scope.formComments.titleC,
+          'user_id': $scope.user.user_id
+        }
+        var req = {
             
-            
+            //   /issues/{issue_id}/comments/{comment_id}:
+            method: 'PUT',
+            url: 'https://isuea-traker-asw.herokuapp.com/issues/'+url[(url.length)-1]+'/comments/'+idComment,
+            headers: {
+                'content-type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Token token='+token
+            },
+            data: {
+                'body': $scope.formComments.titleC
+            }
         };
-
-
+        console.log(req);
+        $http(req).then(function(response) {
+            console.log("Update Comment");/*
+            $scope.$apply(function(){
+            for (var i in $scope.comments){
+                if (i.id==idComment){
+                    i.body = response.data.body;
+                }
+            }
+                
+            })*/
+            $scope.commentU = {};
+         //   alert("Comment deleted");
+            console.log(response);
+            $window.location.reload();
+        }, function(response){
+            // failure callback
+        //    alert("Comment failed to be deleted");
+            console.log(response.data);
+        });
+        //AÑADIDO PARA EL REFRESH
+        $window.location.reload();
+    };
+    
+    $scope.navigateToEditIssue = function() {
+        $location.path( '/issues/'+url[(url.length)-1]+'/edit' );
+    };
     
 }]);

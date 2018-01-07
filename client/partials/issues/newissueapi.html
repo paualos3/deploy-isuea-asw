@@ -11,15 +11,36 @@
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
-                <input type="text" class="form-control" id="category" ng-model="form.category">
+                <select name="singleSelect" class="form-control" id="category" ng-model="form.category">
+                  <option value="Task">Task</option></option>
+                  <option value="Bug">Bug</option>
+                  <option value="Proposal">Proposal</option>
+                  <option value="Enhancement">Enhancement</option></option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="assignee">Assign to</label>
-                <input type="text" class="form-control" id="assignee" ng-model="form.assignee">
+                <select name="singleSelect" class="form-control" id="assignee" ng-model="form.assignee">
+                  <option value="Pau Alos">Pau Alos</option>
+                  <option value="Miguel “STGHMAAV” Álvarez">Miguel “STGHMAAV” Álvarez</option>
+                  <option value="Oriol Saborido Orús">Oriol Saborido Orús</option>
+                  <option value="Gerard Esteve Villuendas">Gerard Esteve Villuendas</option>
+                  <option value="Carles Farré">Carles Farré	</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="priority">Priority</label>
-                <input type="text" class="form-control" id="priority" ng-model="form.priority">
+                <select name="singleSelect" class="form-control" id="priority" ng-model="form.priority">
+                  <option value="Blocker">Blocker</option>
+                  <option value="Critical">Critical</option>
+                  <option value="Major">Major</option>
+                  <option value="Minor">Minor</option>
+                  <option value="Trivial">Trivial</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attachment">Attachment</label>
+                <input type="file" class="form-control" id="attachment" ng-model="form.attachment">
             </div>
             <br>
             <div class="row">

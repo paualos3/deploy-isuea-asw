@@ -27,6 +27,7 @@ app.get('/contact', function(req,res){ res.render('index.ejs'); });
 app.get('/issues', function(req,res){ res.render('index.ejs'); }); 
 app.get('/issues/new', function(req,res){ res.render('index.ejs'); }); 
 app.get('/issues/:id', function(req,res){ res.render('index.ejs'); }); 
+app.get('/issues/:id/edit', function(req,res){ res.render('index.ejs'); });
 
 //make our app listen for incoming requests on the port assigned above
 app.listen(port, function(){

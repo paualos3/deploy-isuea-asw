@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form class="well">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" ng-model="issue.issue">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" ng-model="issue.description">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="singleSelect" class="form-control" id="category" ng-model="issue.category">
+                  <option value="Task">Task</option>
+                  <option value="Bug">Bug</option>
+                  <option value="Proposal">Proposal</option>
+                  <option value="Enhancement">Enhancement</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="assignee">Assign to</label>
+                <select name="singleSelect" class="form-control" id="assignee" ng-model="issue.assignee">
+                  <option value="Pau Alos">Pau Alos</option>
+                  <option value="Miguel “STGHMAAV” Álvarez">Miguel “STGHMAAV” Álvarez</option>
+                  <option value="Oriol Saborido Orús">Oriol Saborido Orús</option>
+                  <option value="Gerard Esteve Villuendas">Gerard Esteve Villuendas</option>
+                  <option value="Carles Farré">Carles Farré	</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select name="singleSelect" class="form-control" id="priority" ng-model="issue.priority">
+                  <option value="Blocker">Blocker</option>
+                  <option value="Critical">Critical</option>
+                  <option value="Major">Major</option>
+                  <option value="Minor">Minor</option>
+                  <option value="Trivial">Trivial</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="singleSelect" class="form-control" id="status" ng-model="issue.status">
+                  <option value="Opened">Opened</option>
+                  <option value="Closed">Closed</option>
+                  <option value="On holded">On holded</option>
+                  <option value="Wontfixed">Wontfixed</option>
+                  <option value="Duplicated">Duplicated</option>
+                  <option value="Invalid">Invalid</option>
+                  <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attachment">Attachment</label>
+                <input type="file" class="form-control" id="attachment" ng-model="issue.attachment">
+            </div>
+            <br>
+            <div class="row">
+                <button type="submit" class="btn btn-success center-block" ng-click="editIssue()">Edit issue</button>
+            </div>
+            <br>
+        </form>
+    </div>
+</div>
